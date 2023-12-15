@@ -1,0 +1,16 @@
+{
+  "security": {
+    "privateKeyPath": "./certs/server-key.pem",
+    "certificatePath": "./certs/server-crt.pem"
+  },
+  "pureCloud": {
+    "environment": "login.usw2.pure.cloud",
+    "orgName": "omontalvodev",
+    "clientId": "a8b20ecf-c2f9-4858-9210-5268a6ddc846",
+    "clientSecret": "tvXDuoGPHM3rZiVksd5VpUNONsbkcTGp62p-yCs7JFU"
+  },
+  "disableHttp": false,
+  "httpPort": 8000,
+  "disableHttps": true,
+  "httpsPort": 8443
+}
