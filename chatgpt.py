@@ -2,10 +2,10 @@ from saml2 import BINDING_HTTP_POST
 from saml2 import md, saml
 from saml2.config import Config
 from saml2.client import Saml2Client
+import xml.etree.ElementTree as ET
 
 # Load IDP metadata
-idp_metadata = """metadata.xml"""
-print(idp_metadata)
+idp_metadata = "metadata.xml"
 
 # Create a SAML client
 sp_config = Config()
@@ -17,15 +17,13 @@ sp_config.load({
         "sp": {
             "endpoints": {
                 "assertion_consumer_service": [
-                    ("https://login.usw2.pure.cloud/saml", BINDING_HTTP_POST),
+                    ("[Your_ACS_URL]", BINDING_HTTP_POST),
                 ],
             },
         },
     },
 })
 saml_client = Saml2Client(config=sp_config)
-print(type(saml_client))
-dir(saml_client)
 
 # Generate SAML assertion
 authn_request_info = saml_client.prepare_for_authenticate()
@@ -36,5 +34,11 @@ saml_response = saml_client.parse_authn_request_response(
 )
 assertion = saml_response.assertions[0]
 
-# Print the SAML assertion
-print(assertion)
+# Convert SAML assertion to XML string
+assertion_xml = assertion.to_string()
+
+# Parse XML string using ElementTree
+root = ET.fromstring(assertion_xml)
+
+# Print the SAML assertion XML
+print(ET.tostring(root, encoding="unicode", method="xml"))
